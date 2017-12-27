@@ -48,8 +48,8 @@ def get_ignored(path):
 		return []
 
 def write_ignored(path, ignored):
-	with open(os.path.join(path, db_filename)) as f:
-		f.write("\n".join([i for i in ingored if i]))
+	with open(os.path.join(path, db_filename), "w") as f:
+		f.write("\n".join([i for i in ignored if i]))
 
 def get_confirmation(text):
 	while(True):
@@ -146,7 +146,7 @@ def insert_templates_all(path, file_ending, ignore_paths, license_name, modifier
 	data = format_license_template(license_name, data, modifiers)
 	if(format_ == "line"):
 		text = uncomment_line_based(data, comment_start, fancy = fancy, 
-				after_comment = after_comment, pad_to = pad_to)
+				after_comment = after_comment, pad_to = pad_to) + "\n\n"
 	else:
 		if(method == "block"):
 			text = uncomment_multiline_block_oriented(data,
@@ -167,7 +167,7 @@ def insert_templates_all(path, file_ending, ignore_paths, license_name, modifier
 	callbacks.append(lambda x: insert_header(x, text))
 
 	if(not ignore_db):
-		callback.append(lambda x: raw_insert_into_db(path, x))
+		callbacks.append(lambda x: raw_insert_into_db(path, x))
 
 	work_all(path, file_ending, callbacks, ignore_paths = ignore_paths, ignore_files = ignore_files)
 
