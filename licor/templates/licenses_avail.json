@@ -1,0 +1,5 @@
+{
+	"GPLv3": {"modifiers": ["single-file", "copyright"]},
+	"AGPLv3": {"modifiers": ["single-file", "copyright"]},
+	"LGPLv3": {"modifiers": ["single-file", "copyright"]}
+}
