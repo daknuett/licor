@@ -37,7 +37,7 @@
 from .main import (list_this_path, list_all, list_db, 
 		print_uncommented_line_based, 
 		print_uncommented_block_based, 
-		print_template_options)
+		print_template_options, insert_templates_all)
 import docopt, datetime, sys
 
 usage = '''\
@@ -45,10 +45,10 @@ usage = '''\
 Insert license/copyright/warranty disclaimer to source files.
 
 Usage:
-       licor list-db [<path>]
-       licor list-all [<path>]
-       licor list-path [<path>]
-       licor list-templates
+       licor list-db [<path>] [options]
+       licor list-all [<path>] [options]
+       licor list-path [<path>] [options]
+       licor list-templates [options]
        licor print-templ <format> [options]
        licor insert-header <format> [<path>] [options]
 
@@ -174,6 +174,9 @@ if( __name__ == "__main__"):
 		except:
 			print("Failed to convert {} to int".format(args["--pad-to"]))
 			sys.exit(1)
+		method = args["--format"]
+		if(not method):
+			method = "line"
 
 		path = args["<path>"]
 		ignore_paths = args["--ignore-paths"].split(",")
@@ -182,4 +185,4 @@ if( __name__ == "__main__"):
 				modifiers, data, args["--comment-start"], args["--comment-stop"],
 				form, method = method, border = args["--border"], fancy = args["--fancy"],
 				after_comment = after_comment, pad_to = pad_to, ignore_db = args["--ignore-db"],
-				confirm = args["--confirmation"])
+				confirm = args["--confirm"])
