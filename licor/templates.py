@@ -47,7 +47,7 @@ def get_resource_string(name):
 	return pkg_resources.resource_string(__name__,"templates/" + name).decode("UTF-8")
 
 
-def get_license_template(name, modifiers = []):
+def get_template(name, modifiers = []):
 	"""
 	Return a ``dict`` containing all necessary information for 
 	filling a license template::
@@ -61,7 +61,7 @@ def get_license_template(name, modifiers = []):
 	``modifiers`` is a list specifying the template. 
 	A typical call might be::
 
-		get_license_template("AGPL", modifiers = ["single-file"])
+		get_template("AGPL", modifiers = ["single-file"])
 	"""
 
 	templates_avail = json.loads(get_resource_string("licenses_avail.json"))
@@ -94,7 +94,7 @@ def get_license_template(name, modifiers = []):
 
 	raise TemplateException("Database licenses_avail.json is desynced. Unable to locate resource.")
 
-def get_license_meta(name, modifiers = []):
+def get_template_meta(name, modifiers = []):
 	"""
 	Return a ``dict`` containing all necessary information for 
 	filling a license template::
@@ -107,7 +107,7 @@ def get_license_meta(name, modifiers = []):
 	``modifiers`` is a list specifying the template. 
 	A typical call might be::
 
-		get_license_meta("AGPL", modifiers = ["single-file"])
+		get_template_meta("AGPL", modifiers = ["single-file"])
 	"""
 
 	templates_avail = json.loads(get_resource_string("licenses_avail.json"))
@@ -136,12 +136,12 @@ def get_license_meta(name, modifiers = []):
 	raise TemplateException("Database licenses_avail.json is desynced. Unable to locate resource.")
 
 
-def format_license_template(name, data, modifiers = []):
+def format_template(name, data, modifiers = []):
 	"""
 	Return a formatted version of the license Template.
 	This text is ready to be uncommented an placed into a source file.
 	"""
-	template = get_license_template(name, modifiers)
+	template = get_template(name, modifiers)
 
 	missing = [k for k in template["keywords"] if not k in data]
 	if(missing):

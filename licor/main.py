@@ -34,9 +34,9 @@
 #    Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
 
 from .work import work_all, work_this_path
-from .templates import get_license_meta, format_license_template, get_templates_available
+from .templates import get_template_meta, format_template, get_templates_available
 from .comment import uncomment_line_based, uncomment_multiline_line_oriented, uncomment_multiline_block_oriented
-import os
+import os, sys
 from .io import insert_header, check_file_perm
 
 db_filename = ".licor.list"
@@ -93,13 +93,13 @@ def list_db(path):
 
 def print_uncommented_line_based(license_name, modifiers, data, 
 		comment_start, fancy = False, after_comment = " ", pad_to = 0):
-	data = format_license_template(license_name, data, modifiers)
+	data = format_template(license_name, data, modifiers)
 	print(uncomment_line_based(data, comment_start, fancy = fancy, 
 				after_comment = after_comment, pad_to = pad_to))
 
 def print_uncommented_block_based(license_name, modifiers, data, 
 		comment_start, comment_stop, method = "line", border = "*", fancy = False, after_comment = " ", pad_to = 0):
-	data = format_license_template(license_name, data, modifiers)
+	data = format_template(license_name, data, modifiers)
 
 	if(method == "block"):
 		print(uncomment_multiline_block_oriented(data,
@@ -143,7 +143,7 @@ def insert_templates_all(path, file_ending, ignore_paths, license_name, modifier
 
 	callbacks = []
 
-	data = format_license_template(license_name, data, modifiers)
+	data = format_template(license_name, data, modifiers)
 	if(format_ == "line"):
 		text = uncomment_line_based(data, comment_start, fancy = fancy, 
 				after_comment = after_comment, pad_to = pad_to) + "\n\n"
