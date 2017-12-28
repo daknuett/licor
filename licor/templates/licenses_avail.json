@@ -1,4 +1,6 @@
-{
+	"GPLv2": {"modifiers": ["single-file", "copyright"]},
+	"AGPLv2": {"modifiers": ["single-file", "copyright"]},
+	"LGPLv2": {"modifiers": ["single-file", "copyright"]},
 	"GPLv3": {"modifiers": ["single-file", "copyright"]},
 	"AGPLv3": {"modifiers": ["single-file", "copyright"]},
 	"LGPLv3": {"modifiers": ["single-file", "copyright"]}
