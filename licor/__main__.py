@@ -179,6 +179,8 @@ if( __name__ == "__main__"):
 			method = "line"
 
 		path = args["<path>"]
+		if(not path):
+			path = "."
 		ignore_paths = args["--ignore-paths"].split(",")
 		ignore_db = args["--ignore-db"]
 		insert_templates_all(path, args["--file-ending"], ignore_paths, license_name,
