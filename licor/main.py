@@ -131,7 +131,7 @@ def insert_templates_all(path, file_ending, ignore_paths, license_name, modifier
 	data = format_template(license_name, data, modifiers)
 	if(format_ == "line"):
 		text = uncomment_line_based(data, comment_start, fancy = fancy, 
-				after_comment = after_comment, pad_to = pad_to) + "\n\n"
+				after_comment = after_comment, pad_to = pad_to)
 	else:
 		if(method == "block"):
 			text = uncomment_multiline_block_oriented(data,
@@ -145,7 +145,7 @@ def insert_templates_all(path, file_ending, ignore_paths, license_name, modifier
 					after_comment = after_comment,
 					fancy = fancy, border = border,
 					pad_to = pad_to)
-
+	text += "\n\n"
 	if(confirm):
 		callbacks.append(get_path_confirmation)
 
