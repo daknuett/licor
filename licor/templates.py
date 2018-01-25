@@ -25,11 +25,16 @@ from string import Template
 class TemplateException(Exception): 
 	pass
 
-def get_resource_string(name):
+def get_resource_string(name, is_global = True):
 	"""
 	Return the resource string with the given name UTF-8 encoded.
 	"""
-	return pkg_resources.resource_string(__name__,"templates/" + name).decode("UTF-8")
+	if(is_global):
+		return pkg_resources.resource_string(__name__,"templates/" + name).decode("UTF-8")
+	else:
+		start = name[0].lower()
+		path = "templates/" + start + "/" + name
+		return pkg_resources.resource_string(__name__, path).decode("UTF-8")
 
 
 def get_template(name, modifiers = []):
@@ -49,7 +54,7 @@ def get_template(name, modifiers = []):
 		get_template("AGPL", modifiers = ["single-file"])
 	"""
 
-	templates_avail = json.loads(get_resource_string("licenses_avail.json"))
+	templates_avail = get_templates_available()
 
 	if( not name in templates_avail):
 		raise TemplateException("Unknown license: {}".format(name))
@@ -68,11 +73,11 @@ def get_template(name, modifiers = []):
 			meta_name = ".".join((name, "meta"))
 			data_name = ".".join((name, "tx"))
 		try:
-			meta = json.loads(get_resource_string(meta_name))
+			meta = json.loads(get_resource_string(meta_name, False))
 		except:
 			continue
 
-		data = get_resource_string(data_name)
+		data = get_resource_string(data_name, False)
 
 		meta.update({"text": data})
 		return meta
@@ -112,7 +117,7 @@ def get_template_meta(name, modifiers = []):
 		else:
 			meta_name = ".".join((name, "meta"))
 		try:
-			meta = json.loads(get_resource_string(meta_name))
+			meta = json.loads(get_resource_string(meta_name, True))
 		except:
 			continue
 
