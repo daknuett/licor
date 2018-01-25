@@ -100,7 +100,7 @@ def get_template_meta(name, modifiers = []):
 		get_template_meta("AGPL", modifiers = ["single-file"])
 	"""
 
-	templates_avail = json.loads(get_resource_string("licenses_avail.json"))
+	templates_avail = get_templates_available()
 
 	if( not name in templates_avail):
 		raise TemplateException("Unknown license: {}".format(name))
@@ -117,7 +117,7 @@ def get_template_meta(name, modifiers = []):
 		else:
 			meta_name = ".".join((name, "meta"))
 		try:
-			meta = json.loads(get_resource_string(meta_name, True))
+			meta = json.loads(get_resource_string(meta_name, False))
 		except:
 			continue
 
