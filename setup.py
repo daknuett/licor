@@ -7,6 +7,7 @@ setup(
 	package_data = {"licor": ["templates/*"]},
 	author = "Daniel Knüttel",
 	author_email = "daniel.knuettel@daknuett.eu",
-	install_requires = ["docopt"]
+	install_requires = ["docopt"],
 
+	entry_points = {"console_scripts": ["licor = licor.main:main"]}
      )
