@@ -1,6 +1,7 @@
 
 clean:
 	python3 setup.py clean
+	-rm dist/*
 sdist: clean
 	python3 setup.py sdist
 
