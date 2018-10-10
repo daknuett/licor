@@ -1,4 +1,4 @@
-# Copyright (c) 2017 Daniel Knüttel                                           #
+# Copyright (c) 2018 Daniel Knüttel                                           #
 #                                                                             #
 # This file is part of licor.                                                 #
 #                                                                             #
