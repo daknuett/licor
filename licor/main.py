@@ -58,10 +58,13 @@ Options:
 
 
 db_filename = ".licor.list"
-def get_ignored(path):
+def get_ignored(path, root_path = ""):
+	if(not root_path):
+		root_path = os.curdir
 	try:
 		with open(os.path.join(path, db_filename)) as f:
-			return f.read().split("\n")
+			return [os.path.relpath(os.path.abspath(p), root_path) 
+				for p in f.read().split("\n")]
 	except:
 		return []
 
@@ -96,7 +99,10 @@ def list_this_path(path, file_ending, ignore_db = False):
 		ignore_files = get_ignored(path)
 	else:
 		ignore_files = []
-	work_this_path(path, file_ending, [print], ignore_files = ignore_files)
+	work_this_path(path
+			, file_ending
+			, [print]
+			, ignore_files = ignore_files)
 
 def list_all(path, file_ending, ignore_paths, ignore_db = False):
 	if(not ignore_db):
