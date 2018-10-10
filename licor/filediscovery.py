@@ -21,14 +21,18 @@
 
 import glob, os
 
-def discover_this_path(path, file_ending):
+def discover_this_path(path, file_ending, root_path = ""):
 	"""
 	Discover all matching files in this path.
 
 	Return an iterator yielding the filepaths.
 	"""
 
-	return (os.path.abspath(p) for p in glob.iglob(os.path.join(path, "*." + file_ending)))
+	if(not root_path):
+		root_path = os.curdir
+
+	return (os.path.relpath(os.path.abspath(p), root_path) 
+			for p in glob.iglob(os.path.join(path, "*." + file_ending)))
 
 
 def discover_all(path, file_ending, ignore_paths = []):
@@ -38,6 +42,7 @@ def discover_all(path, file_ending, ignore_paths = []):
 
 	Yield the filepaths.
 	"""
+	root_path = os.path.abspath(path)
 	
 	for p in os.walk(path):
 		path = p[0]
@@ -46,7 +51,7 @@ def discover_all(path, file_ending, ignore_paths = []):
 		if(any( [ignore in splitted for ignore in ignore_paths ])):
 			continue
 		
-		for i in discover_this_path(path, file_ending):
+		for i in discover_this_path(path, file_ending, root_path = root_path):
 			yield i
 
 
