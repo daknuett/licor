@@ -1,0 +1,9 @@
+setup.py
+licor/comment.py
+licor/filediscovery.py
+licor/__init__.py
+licor/io.py
+licor/__main__.py
+licor/main.py
+licor/templates.py
+licor/work.py
