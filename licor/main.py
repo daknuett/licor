@@ -68,9 +68,13 @@ def get_ignored(path, root_path = ""):
 	except:
 		return []
 
-def write_ignored(path, ignored):
+def write_ignored(path, ignored, root_path = ""):
+	if(not root_path):
+		root_path = os.curdir
+	
 	with open(os.path.join(path, db_filename), "w") as f:
-		f.write("\n".join([i for i in ignored if i]))
+		f.write("\n".join([os.path.relpath(os.path.abspath(i), root_path) 
+					for i in ignored if i]))
 
 def get_confirmation(text):
 	while(True):
@@ -86,11 +90,11 @@ def get_path_confirmation(path):
 	return not get_confirmation("use " + path)
 
 
-def raw_insert_into_db(db_path, path):
+def raw_insert_into_db(db_path, path, root_path):
 	ignored = get_ignored(db_path)
 	if(not path in ignored):
 		ignored.append(path)
-	write_ignored(db_path, ignored)
+	write_ignored(db_path, ignored, root_path)
 
 
 
@@ -151,6 +155,8 @@ def insert_templates_all(path, file_ending, ignore_paths, license_name, modifier
 		comment_start, comment_stop, format_, method = "line", border = "*",
 		fancy = False, after_comment = " ", pad_to = 0,
 		ignore_db = False, confirm = False):
+
+	root_path = path
 	if(not ignore_db):
 		ignore_files = get_ignored(path)
 	else:
@@ -191,7 +197,7 @@ def insert_templates_all(path, file_ending, ignore_paths, license_name, modifier
 	callbacks.append(lambda x: insert_header(x, text))
 
 	if(not ignore_db):
-		callbacks.append(lambda x: raw_insert_into_db(path, x))
+		callbacks.append(lambda x: raw_insert_into_db(path, x, root_path))
 
 	work_all(path, file_ending, callbacks, ignore_paths = ignore_paths, ignore_files = ignore_files)
 
